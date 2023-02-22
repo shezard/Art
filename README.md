@@ -17,5 +17,11 @@
 
 ```bash
 docker build -t art_image . --rm
-docker run --name art --rm art_image
+MSYS_NO_PATHCONV=1 docker run -it --name art -v "$(pwd)/data:/home/root/data" --rm art_image <url>
+```
+
+or use
+
+```
+    run.sh <url>
 ```
