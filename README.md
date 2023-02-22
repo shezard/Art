@@ -13,7 +13,9 @@
 - Web app to display references / search by tags (react)
 
 
-```
+### Building and running Art CLI
+
+```bash
 docker build -t art_image . --rm
 docker run --name art --rm art_image
 ```
