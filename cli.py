@@ -37,7 +37,7 @@ def fetch_image(url, extension):
 
 
 def save_image(file_name, content):
-    with open(file_name,'wb') as file:
+    with open(file_name, 'wb') as file:
         file.write(content.data)
 
 
@@ -53,19 +53,19 @@ def get_tags():
 def save_tags(md5hash, tags):
     try:
         with open(Path(os.getcwd()) / 'data' / 'data.json', 'r+') as data_file:
-            try :
+            try:
                 data = json.load(data_file)
                 data_file.seek(0)
             except json.decoder.JSONDecodeError:
                 data = {}
+            save_data_to_data_file(md5hash, tags, data_file, data)
 
-            data[md5hash] = list(map(lambda x : x.strip(), tags.split(',')))
-
-            json.dump(data, data_file)
     except FileNotFoundError:
         with open(Path(os.getcwd()) / 'data' / 'data.json', 'w') as data_file:
-            data = {}
+            save_data_to_data_file(md5hash, tags, data_file, {})
 
-            data[md5hash] = list(map(lambda x : x.strip(), tags.split(',')))
 
-            json.dump(data, data_file)
+def save_data_to_data_file(md5hash, tags, data_file, data):
+    data[md5hash] = list(map(lambda x: x.strip(), tags.split(',')))
+
+    json.dump(data, data_file)
