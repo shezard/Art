@@ -4,6 +4,7 @@ import os
 import sys
 from pathlib import Path
 from ascii_magic import AsciiArt
+import json
 
 url = sys.argv[1]
 
@@ -39,4 +40,20 @@ img.to_terminal()
 
 tags = input("Please enter tags list (e.g tags1, tags2, tags3): ")
 
+try: 
+    with open(Path(os.getcwd()) / 'data' / 'data.json', 'r+') as data_file:
+        try :
+            data = json.load(data_file)
+        except IOError:
+            data = {}
+        except json.decoder.JSONDecodeError:
+            data = {}
+        print(data)
+except FileNotFoundError:
+    with open(Path(os.getcwd()) / 'data' / 'data.json', 'w') as data_file:
+        data = {}
+
+data[hash] = list(map(lambda x : x.strip(), tags.split(',')))
+
+print(data)
 print(tags)
